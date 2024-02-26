@@ -24,7 +24,7 @@ Nesta seção, você encontrará listas de exercícios para praticar suas habili
 
 ## Ideias Malucas
 
-Estou planejando...
+Alguns desafios que eu mesmo me faço.
 
 ## Contribuição
 
