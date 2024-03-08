@@ -14,6 +14,8 @@ Aqui estão os cursos que estou estudando:
 
 - Curso de Python para Iniciantes
 - Curso Avançado de Python
+- lógica de programação em python
+- Estrutura de dados
 
 ## Exercícios
 
@@ -21,10 +23,6 @@ Nesta seção, você encontrará listas de exercícios para praticar suas habili
 
 - Lista de Exercícios de Manipulação de Strings
 - Lista de Exercícios de Estruturas de Dados
-
-## Ideias Malucas
-
-Alguns desafios que eu mesmo me faço.
 
 ## Contribuição
 
