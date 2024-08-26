@@ -3,24 +3,42 @@ import tkinter as tk
 
 # Definindo os tokens
 tokens = {
-    'INT': r'\d+',
-    'FLOAT': r'\d*\.?\d+',
-    'ID': r'[a-zA-Z_][a-zA-Z0-9_]*',
-    'PLUS': r'\+',
-    'MINUS': r'-',
-    'MULTIPLY': r'\*',
-    'DIVIDE': r'/',
+     # Palavra-chave (keywords)
+    'C_KEYWORD': r'\b(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return)\b',
+    'JAVA_KEYWORD': r'\b(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return|public|private|protected|static|final|class)\b',
+    'PYTHON_KEYWORD': r'\b(if|else|elif|while|for|in|def|return|True|False|None)\b',
+
+    # Número (inteiros e floats)
+    'FLOAT': r'\d*\.\d+',
+    'INT': r'\b\d+\b',
+
+    # Identificador
+    'ID': r'\b[a-zA-Z_][a-zA-Z0-9_]*\b',
+
+    # String
+    'STRING': r'"([^"\\]*(\\.[^"\\]*)*)"',  # Strings entre aspas duplas
+    'CHAR': r"\'([^'\\]*(\\.[^'\\]*)*)\'",  # Caracteres entre aspas simples
+
+    # Delimitador
     'LPAREN': r'\(',
     'RPAREN': r'\)',
-    # Tokens adicionais para C
-    'C_KEYWORD': r'(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return)',
+    'LBRACE': r'\{',
+    'RBRACE': r'\}',
+    'LBRACKET': r'\[',
+    'RBRACKET': r'\]',
+    'COMMA': r',',
+    'SEMICOLON': r';',
+
+    # Operador
     'C_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
-    # Tokens adicionais para Java
-    'JAVA_KEYWORD': r'(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return|public|private|protected|static|final|class)',
     'JAVA_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
-    # Tokens adicionais para Python
-    'PYTHON_KEYWORD': r'(if|else|elif|while|for|in|def|return|True|False|None)',
-    'PYTHON_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
+    'PYTHON_OPERATOR': r'(and|or|==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
+
+    # Espaços em branco
+    'WHITESPACE': r'\s+',
+
+    # Desconhecido
+    'UNKNOWN': r'.',  # Qualquer outro caractere
 }
 
 def validar_token(token):
