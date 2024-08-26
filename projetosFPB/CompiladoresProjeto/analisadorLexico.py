@@ -1,7 +1,7 @@
-# Definindo os tokens
 import re
+import tkinter as tk
 
-
+# Definindo os tokens
 tokens = {
     'INT': r'\d+',
     'FLOAT': r'\d*\.?\d+',
@@ -40,8 +40,45 @@ def lex(code):
 
     return token_list
 
-# Exemplo de uso
-code = "3.14 + 2 * (4 - 1)"
-tokens = lex(code)
-for token in tokens:
-    print(token)
+# Função para processar o código inserido pelo usuário
+def process_code():
+    user_input = code_entry.get()
+    try:
+        tokens = lex(user_input)
+
+        count = 0
+        token_types = set()
+
+        for token in tokens:
+            count += 1
+            token_types.add(token[0])
+
+        result_label.config(text=f"Total tokens: {count}\nToken types: {', '.join(token_types)}")
+        error_label.config(text="")
+    except ValueError as e:
+        result_label.config(text="")
+        error_label.config(text=str(e))
+
+# Criar a janela principal
+window = tk.Tk()
+window.title("Analisador Léxico")
+window.geometry("400x250")
+
+# Criar os widgets
+code_label = tk.Label(window, text="Enter the code:")
+code_label.pack()
+
+code_entry = tk.Entry(window, width=50)
+code_entry.pack()
+
+process_button = tk.Button(window, text="Process", command=process_code)
+process_button.pack()
+
+result_label = tk.Label(window, text="")
+result_label.pack()
+
+error_label = tk.Label(window, text="", fg="red")
+error_label.pack()
+
+# Iniciar o loop principal da janela
+window.mainloop()
