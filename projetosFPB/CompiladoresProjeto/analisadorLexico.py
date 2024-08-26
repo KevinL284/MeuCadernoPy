@@ -12,73 +12,54 @@ tokens = {
     'DIVIDE': r'/',
     'LPAREN': r'\(',
     'RPAREN': r'\)',
+    # Tokens adicionais para C
+    'C_KEYWORD': r'(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return)',
+    'C_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
+    # Tokens adicionais para Java
+    'JAVA_KEYWORD': r'(int|float|char|void|if|else|for|while|do|switch|case|break|continue|return|public|private|protected|static|final|class)',
+    'JAVA_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
+    # Tokens adicionais para Python
+    'PYTHON_KEYWORD': r'(if|else|elif|while|for|in|def|return|True|False|None)',
+    'PYTHON_OPERATOR': r'(&&|\|\||==|!=|<=|>=|<|>|=|\+|-|\*|/|%|!)',
 }
 
-# Função para analisar o código fonte
-def lex(code):
-    # Lista para armazenar os tokens encontrados
-    token_list = []
+def validar_token(token):
+    for tipo, padrao in tokens.items():
+        if re.fullmatch(padrao, token):
+            return tipo
+    return 'INVÁLIDO'
 
-    # Iterar sobre o código fonte
-    while code:
-        # Remover espaços em branco no início do código
-        code = code.strip()
+def verificar_tokens():
+    entrada = entrada_text.get("1.0", tk.END).strip()
+    tokens_digitados = entrada.split()
+    resultado_text.delete("1.0", tk.END)
+    resultado_text.insert(tk.END, f"Total de tokens digitados: {len(tokens_digitados)}\n\n")
+    for token in tokens_digitados:
+        tipo = validar_token(token)
+        resultado_text.insert(tk.END, f"Token: {token}\nTipo: {tipo}\nValidade: {'Válido' if tipo != 'INVÁLIDO' else 'Inválido'}\n\n")
 
-        # Verificar se o código corresponde a algum token
-        for token_name, token_pattern in tokens.items():
-            match = re.match(token_pattern, code)
-            if match:
-                # Adicionar o token encontrado à lista
-                token_value = match.group(0)
-                token_list.append((token_name, token_value))
-                # Atualizar o código removendo o token encontrado
-                code = code[len(token_value):]
-                break
-        else:
-            # Se nenhum token corresponder, gerar um erro
-            raise ValueError(f"Invalid token: {code}")
+# Criando a janela principal
+janela = tk.Tk()
+janela.title("Analisador Léxico")
+janela.geometry("400x400")
 
-    return token_list
+# Criando o campo de entrada
+entrada_label = tk.Label(janela, text="Digite os tokens:")
+entrada_label.pack()
 
-# Função para processar o código inserido pelo usuário
-def process_code():
-    user_input = code_entry.get()
-    try:
-        tokens = lex(user_input)
+entrada_text = tk.Text(janela, height=5)
+entrada_text.pack()
 
-        count = 0
-        token_types = set()
+# Criando o botão de verificação
+verificar_button = tk.Button(janela, text="Verificar Tokens", command=verificar_tokens)
+verificar_button.pack()
 
-        for token in tokens:
-            count += 1
-            token_types.add(token[0])
+# Criando o campo de resultado
+resultado_label = tk.Label(janela, text="Resultado:")
+resultado_label.pack()
 
-        result_label.config(text=f"Total tokens: {count}\nToken types: {', '.join(token_types)}")
-        error_label.config(text="")
-    except ValueError as e:
-        result_label.config(text="")
-        error_label.config(text=str(e))
+resultado_text = tk.Text(janela, height=15)
+resultado_text.pack()
 
-# Criar a janela principal
-window = tk.Tk()
-window.title("Analisador Léxico")
-window.geometry("400x250")
-
-# Criar os widgets
-code_label = tk.Label(window, text="Enter the code:")
-code_label.pack()
-
-code_entry = tk.Entry(window, width=50)
-code_entry.pack()
-
-process_button = tk.Button(window, text="Process", command=process_code)
-process_button.pack()
-
-result_label = tk.Label(window, text="")
-result_label.pack()
-
-error_label = tk.Label(window, text="", fg="red")
-error_label.pack()
-
-# Iniciar o loop principal da janela
-window.mainloop()
+# Iniciando a interface
+janela.mainloop()
